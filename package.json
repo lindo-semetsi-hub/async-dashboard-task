@@ -2,6 +2,10 @@
   "name": "node-starter",
   "private": true,
   "scripts": {
+    "build": "tsc",
+    "callback": "tsc && node dist/callbackVersion.js",
+    "promise": "tsc && node dist/promiseVersion.js",
+    "async": "tsc && node dist/asyncAwaitVersion.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
