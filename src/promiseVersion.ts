@@ -19,6 +19,13 @@ resolve(parsedData);
         }
         });
     }).on("error", (err) => {
-        reject(err);
-    })
+        rejects(err);
+    });
 }
+
+// URL for API
+const weatherURL =
+"https://api.open-meteo.com/v1/forecast?latitude=40.71&longitude=-74.018current_weather=true";
+const newsURL = "https://dummyjson.com/posts?limit=5";
+
+fetchJSONPromise(weatherURL)
