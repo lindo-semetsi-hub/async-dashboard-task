@@ -41,7 +41,7 @@ fetchJSONPromise(weatherURL)
 });
 
 
-
+// run both weather and news at the same time
 Promise.all([fetchJSONPromise(weatherURL), fetchJSONPromise(newsURL)])
 .then(([weather, news]) => {
     console.log("\n Peomise.all results:");
@@ -51,7 +51,7 @@ Promise.all([fetchJSONPromise(weatherURL), fetchJSONPromise(newsURL)])
 .catch((err) => {
     console.error("Promise.all eerror: ", err);
 });
-
+//whicherver responds first will be printed first
 Promise.race([fetchJSONPromise(weatherURL), fetchJSONPromise(newsURL)])
 .then((firstResult) => {
     console.log("\n Promise.race result:", firstResult);
