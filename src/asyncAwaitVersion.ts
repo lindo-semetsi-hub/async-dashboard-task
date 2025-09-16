@@ -36,27 +36,28 @@ async function runAsyncAwaitDemo() {
 
         //in sequence, first data, then news
         const weatherData = await fetchJSONPromise(weatherURL);
-        console.log("Weather data: ", weatherData.current_weather);
+        console.log("Weather: ", weatherData.current_weather);
 
         const newsData = await fetchJSONPromise(newsURL);
 
-        console.log("Latest news: ", newsData.posts);
+        console.log("News: ", newsData.posts);
 
         const [weatherAll, newsAll] = await Promise.all([
             fetchJSONPromise(weatherURL),
             fetchJSONPromise(newsURL),
         ]);
-        console.log("\n Pomise.allwith async(await:");
+        console.log("\n Promise.allwith async(await:");
         console.log("Weather:", weatherAll.current_weather);
         console.log("News:", newsAll.posts);
 
+        //race
         const fastest = await Promise.race([
             fetchJSONPromise(weatherURL),
             fetchJSONPromise(newsURL), 
         ])
         console.log("\n Promise.race with async await:", fastest);
-    } catch (err) {
-        console.error(" Error in async await demo:", err);
+    } catch (err: any) {
+        console.error(" Error in async await demo:", err.message);
     }
 }
 

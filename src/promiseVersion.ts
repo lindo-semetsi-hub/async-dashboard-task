@@ -34,10 +34,10 @@ fetchJSONPromise(weatherURL)
     return fetchJSONPromise(newsURL);
 })
 .then((newsData) => {
-    console.log("Latest news: ", newsData.posts);
+    console.log("News: ", newsData.posts);
 })
 .catch((err) => {
-    console.error("Error:", err);
+    console.error("Error:", err.message);
 });
 
 
@@ -49,7 +49,7 @@ Promise.all([fetchJSONPromise(weatherURL), fetchJSONPromise(newsURL)])
     console.log("News:", news.posts);
 })
 .catch((err) => {
-    console.error("Promise.all eerror: ", err);
+    console.error("Promise.all error: ", err);
 });
 //whicherver responds first will be printed first
 Promise.race([fetchJSONPromise(weatherURL), fetchJSONPromise(newsURL)])
