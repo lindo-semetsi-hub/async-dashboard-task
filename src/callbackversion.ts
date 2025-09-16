@@ -1,5 +1,6 @@
 import * as https from "http";
 
+// callback helper
 function fetchJSON(url: string, callback: (err: any, data?: any) => void) {
     https.get(url, (res) => {
         let rawData = "";
@@ -21,23 +22,25 @@ function fetchJSON(url: string, callback: (err: any, data?: any) => void) {
         });
     }
 
-    // fetch weather
+   //urls
     const weatherURL = "https://api.open-meteo.com/v1/forecast?latitude=40.71&longitude=-74.01&current_weather=true";
+    const newsURL = "https://dummyjson.com/posts?limits=5";
 
+// fetch weather
     fetchJSON(weatherURL, (err, weatherData) => {
     if (err) {
-        console.error ("Weather fetch error:", err);
+        console.error ("Weather fetch failed:", err.message);
         return;
     }
-    console.log("Weather data:", weatherData.current_weather);
+    console.log("Weather:", weatherData.current_weather);
     const newsURL = "https://dummyjson.com/posts?limit=5";
     
     //fetch news
     fetchJSON(newsURL, ( newsData) => {
         if (err) {
-            console.error("News fetch error:", err);
+            console.error("News fetch failed:", err.message);
             return;
         }
-        console.log("Latest fetch error:", newsData.posts);
+        console.log("News:", newsData.posts);
     });
     });
