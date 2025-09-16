@@ -1,11 +1,10 @@
-import { rejects } from "assert";
 import * as https from "https";
 
-function fetchJSONPromise(ul: string ): Promise<any> {
+// fetch helper
+function fetchJSONPromise(url: string ): Promise<any> {
     return new Promise((resolve, reject) => {
         https.get(url, (res) => {
             let rawData = "";
-        });
 
         res.on("data", (chunk) => {
             rawData += chunk;
@@ -19,8 +18,9 @@ resolve(parsedData);
         }
         });
     }).on("error", (err) => {
-        rejects(err);
+        reject(err);
     });
+});
 }
 
 // URL for API
@@ -29,3 +29,33 @@ const weatherURL =
 const newsURL = "https://dummyjson.com/posts?limit=5";
 
 fetchJSONPromise(weatherURL)
+.then((weatherData) => {
+    console.log("Weather data:", weatherData.current_weather);
+    return fetchJSONPromise(newsURL);
+})
+.then((newsData) => {
+    console.log("Latest news: ", newsData.posts);
+})
+.catch((err) => {
+    console.error("Error:", err);
+});
+
+
+
+Promise.all([fetchJSONPromise(weatherURL), fetchJSONPromise(newsURL)])
+.then(([weather, news]) => {
+    console.log("\n Peomise.all results:");
+    console.log("Weather:", weather.current_weather);
+    console.log("News:", news.posts);
+})
+.catch((err) => {
+    console.error("Promise.all eerror: ", err);
+});
+
+Promise.race([fetchJSONPromise(weatherURL), fetchJSONPromise(newsURL)])
+.then((firstResult) => {
+    console.log("\n Promise.race result:", firstResult);
+})
+.catch((err) => {
+    console.error("Promise.race error:", err);
+});
